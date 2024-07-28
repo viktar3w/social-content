@@ -56,7 +56,7 @@ export const POST = async (req: Request) => {
       success_url: `${process.env.NEXT_PUBLIC_SERVER_URL}/dashboard`,
       cancel_url: process.env.NEXT_PUBLIC_SERVER_URL,
       metadata: {
-        userId,
+        userId: userId,
       },
     });
     return NextResponse.json({ url: session.url });
