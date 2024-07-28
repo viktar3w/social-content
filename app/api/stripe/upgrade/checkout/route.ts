@@ -53,8 +53,8 @@ export const POST = async (req: Request) => {
       customer: stripeCustomer?.stripeCustomerId,
       line_items,
       mode: "payment",
-      success_url: "http://localhost:5173/dashboard",
-      cancel_url: "http://localhost:5173/",
+      success_url: `${process.env.NEXT_PUBLIC_SERVER_URL}/dashboard`,
+      cancel_url: process.env.NEXT_PUBLIC_SERVER_URL,
       metadata: {
         userId,
       },
