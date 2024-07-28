@@ -18,6 +18,7 @@ export const POST = async (req: Request) => {
       process.env.STRIPE_WEBHOOK_SECRET_KEY!,
     );
   } catch (err: any) {
+    console.log("[ERROR] ", err)
     return NextResponse.json({ error: "Invalid event" }, { status: 400 });
   }
   const session = event.data.object as Stripe.Checkout.Session;
