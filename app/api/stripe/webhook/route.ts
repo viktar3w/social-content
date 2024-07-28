@@ -7,15 +7,18 @@ import { db } from "@/lib/db";
 export const POST = async (req: Request) => {
   const body = await req.text();
   const sig = headers().get("stripe-signature");
+  if (!sig) {
+    return NextResponse.json({ error: "Invalid signature" }, { status: 400 });
+  }
   let event;
   try {
     event = stripe.webhooks.constructEvent(
       body,
-      sig!,
+      sig,
       process.env.STRIPE_WEBHOOK_SECRET_KEY!,
     );
   } catch (err: any) {
-    return NextResponse.json({ error: "Invalid signature" }, { status: 400 });
+    return NextResponse.json({ error: "Invalid event" }, { status: 400 });
   }
   const session = event.data.object as Stripe.Checkout.Session;
   const userId = session?.metadata?.userId;
