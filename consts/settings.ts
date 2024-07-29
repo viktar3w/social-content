@@ -1,0 +1,1 @@
+export const DEFAULT_LENGTH_AI = 10000 as const

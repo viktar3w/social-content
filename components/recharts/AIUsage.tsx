@@ -5,6 +5,7 @@ import {
 } from "@/actions/send-ai-request";
 import { memo, useEffect, useState } from "react";
 import AIChart from "@/components/recharts/AIChart";
+import { DEFAULT_LENGTH_AI } from "@/consts/settings";
 
 const AIUsage = () => {
   const [userAiOutputs, setUserAiOutputs] =
@@ -15,7 +16,7 @@ const AIUsage = () => {
   return (
     <div className="bg-white">
       <AIChart
-        availableCredit={userAiOutputs?.availableCredit || 10000}
+        availableCredit={userAiOutputs?.availableCredit || DEFAULT_LENGTH_AI}
         totalUsage={userAiOutputs?.totalUsage || 0}
       />
     </div>

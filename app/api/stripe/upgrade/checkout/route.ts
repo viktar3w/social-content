@@ -3,6 +3,7 @@ import { NextResponse } from "next/server";
 import Stripe from "stripe";
 import { db } from "@/lib/db";
 import { stripe } from "@/lib/stripe";
+import { DEFAULT_LENGTH_AI } from "@/consts/settings";
 
 export const POST = async (req: Request) => {
   try {
@@ -27,7 +28,7 @@ export const POST = async (req: Request) => {
     await db.purchase.create({
       data: {
         userId,
-        credit: 10000,
+        credit: DEFAULT_LENGTH_AI,
       },
     });
     let stripeCustomer = await db.stripeCustomer.findUnique({

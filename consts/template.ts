@@ -131,7 +131,7 @@ export const contentTemplates = [
     name: "Tweet",
     desc: "An AI tool that generate Linkedin Post idea based on your post niche and outline information",
     category: "Tweet",
-    // icon: FaTwitter,
+    icon: FaTwitter,
     aiPrompt:
       "Give me 280 characters of tweet example on given niche & outline topic",
     slug: "generate-tweet-post",
