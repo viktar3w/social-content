@@ -5,12 +5,6 @@ import Stripe from "stripe";
 import { db } from "@/lib/db";
 import { DEFAULT_LENGTH_AI } from "@/consts/settings";
 
-export const config = {
-  api: {
-    bodyParser: false,
-  },
-};
-
 export async function POST(req: Request) {
   try {
     const body = (req as any).rawBody || (await req.text());
