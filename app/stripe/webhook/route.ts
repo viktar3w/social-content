@@ -1,4 +1,3 @@
-"use server";
 import { stripe } from "@/lib/stripe";
 import { NextResponse } from "next/server";
 import Stripe from "stripe";
@@ -12,10 +11,7 @@ export async function POST(req: Request) {
     if (!sig) {
       return NextResponse.json({ error: "Invalid signature" }, { status: 400 });
     }
-    console.log(
-      "[STRIPE_WEBHOOK_SECRET_KEY] ",
-      process.env.STRIPE_WEBHOOK_SECRET_KEY,
-    );
+    console.log("[verifyHeader] ", stripe.webhooks.signature.verifyHeader(body, sig, process.env.STRIPE_WEBHOOK_SECRET_KEY!))
     const event = stripe.webhooks.constructEvent(
       body,
       sig,
