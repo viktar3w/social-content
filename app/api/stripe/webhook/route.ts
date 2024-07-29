@@ -12,6 +12,9 @@ export const POST = async (req: Request) => {
   }
   let event;
   try {
+    console.log("[body] ", body)
+    console.log("[sig] ", sig)
+    console.log("[STRIPE_WEBHOOK_SECRET_KEY] ", process.env.STRIPE_WEBHOOK_SECRET_KEY)
     event = stripe.webhooks.constructEvent(
       body,
       sig,
