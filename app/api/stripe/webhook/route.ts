@@ -5,9 +5,15 @@ import Stripe from "stripe";
 import { db } from "@/lib/db";
 import { DEFAULT_LENGTH_AI } from "@/consts/settings";
 
+export const config = {
+  api: {
+    bodyParser: false,
+  },
+};
+
 export async function POST(req: Request) {
   try {
-    const body = await req.text();
+    const body = (req as any).rawBody || (await req.text());
     const sig = headers().get("stripe-signature");
     if (!sig) {
       return NextResponse.json({ error: "Invalid signature" }, { status: 400 });
