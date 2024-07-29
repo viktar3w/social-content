@@ -1,17 +1,10 @@
 import { clerkMiddleware, createRouteMatcher } from "@clerk/nextjs/server";
-import getRawBody from "raw-body";
 
 const isProtectedRoute = createRouteMatcher([
   "/dashboard(.*)",
   "/api/stripe/upgrade(.*)",
 ]);
-export default clerkMiddleware(async (auth, request) => {
-  if (
-    request.method === "POST" &&
-    request.nextUrl.pathname === "/api/stripe/webhook"
-  ) {
-    (request as any).rawBody = await getRawBody(request.body as any);
-  }
+export default clerkMiddleware((auth, request) => {
   if (isProtectedRoute(request)) auth().protect();
 });
 export const config = {
