@@ -1,3 +1,4 @@
+"use server";
 import { headers } from "next/headers";
 import { stripe } from "@/lib/stripe";
 import { NextResponse } from "next/server";
@@ -12,13 +13,13 @@ export async function POST(req: Request) {
     if (!sig) {
       return NextResponse.json({ error: "Invalid signature" }, { status: 400 });
     }
-    console.log("[body] ",body)
     const event = stripe.webhooks.constructEvent(
       body,
       sig,
       process.env.STRIPE_WEBHOOK_SECRET_KEY!,
     );
-    const session = event.data.object as Stripe.Checkout.Session;
+    console.log("[event] ", event.type)
+    const session = event?.data?.object as Stripe.Checkout.Session;
     const userId = session?.metadata?.userId;
     if (!userId) {
       return NextResponse.json({ error: "Invalid session" }, { status: 400 });
