@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import { ClerkProvider } from "@clerk/nextjs";
+import { GoogleTagManager } from '@next/third-parties/google'
 import "./globals.css";
 import GoogleAnalytics from "@/components/GoogleAnalytics";
 import { ReactNode } from "react";
@@ -20,8 +21,19 @@ export default function RootLayout({
   return (
     <ClerkProvider>
       <html lang="en">
+        {!!process.env.NEXT_PUBLIC_GTM_ID && <GoogleTagManager gtmId={process.env.NEXT_PUBLIC_GTM_ID} />}
         <GoogleAnalytics />
-        <body className={inter.className}>{children}</body>
+        <body className={inter.className}>
+        <>
+          {!!process.env.NEXT_PUBLIC_GTM_ID && (
+              <noscript>
+                <iframe src={`https://www.googletagmanager.com/ns.html?id=${process.env.NEXT_PUBLIC_GTM_ID}`}
+                        height="0" width="0" style={{display: "none", visible: "hidden"}}></iframe>
+              </noscript>
+          )}
+          {children}
+        </>
+        </body>
       </html>
     </ClerkProvider>
   );
